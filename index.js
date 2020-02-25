@@ -5,7 +5,7 @@ var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
 var path = require('path');
 
-var databaseUri = 'mongodb://SamuraiZack:T1meMuffin1856@ds129095-a0.mlab.com:29095,ds129095-a1.mlab.com:29095/aftercredits?replicaSet=rs-ds129095';
+var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 
 if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
@@ -14,10 +14,9 @@ if (!databaseUri) {
 var api = new ParseServer({
   databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: process.env.APP_ID || 'KIaVlwePeCpkXHNucb21T52C6Nnkmk2ISarDkqEw',
-masterKey: process.env.MASTER_KEY || 'fTd638q0DN5jFThXzvETErGqGKXomVQ9zeYmskJU', //Add your master key here. Keep it secret!
-serverURL: process.env.SERVER_URL || 'https://after-credits-95724.herokuapp.com/parse',  // Don't forget to change to https if needed
-clientKey: 'AtlRBUqOpJ4d3tAAo5Hi1utHmzv9WxafwXJaUzOU', //Add your master key here. Keep it secret!
+  appId: process.env.APP_ID || 'myAppId',
+  masterKey: process.env.MASTER_KEY || '', //Add your master key here. Keep it secret!
+  serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse',  // Don't forget to change to https if needed
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
